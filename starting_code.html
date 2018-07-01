@@ -27,9 +27,9 @@
     the custom autocomplete widget that matches the search keyword
     will be shown in bold, underline and red. */
 
-    font-style: underline;
-    font-weight: bold;
-    color: red;
+    font-style: italic;
+    text-decoration: underline;
+    color: Blue;
   }
 
   li.focused { font-size:16px; }
@@ -68,6 +68,7 @@
       that._renderItemData(ul, item);
     });
   };
+  /* ToDo: Define the custom autocomplete widget according to the above three functions. */
   $.widget( "custom.myautocomplete", $.ui.autocomplete, {
     _create: myAutoCompleteWidgetConstructor,
     _renderItem: renderAutoCompleteMenuItem,
@@ -98,16 +99,14 @@
         that._renderItemData(ul, item);
       });
     };
-    */
-    /* ToDo: Define the custom autocomplete widget according to the above three functions. */
+
+    /* ToDo: Define the custom autocomplete widget according to the above three functions.
     $.widget( "custom.myautocomplete", $.ui.autocomplete, {
       _create: myAutoCompleteWidgetConstructor,
       _renderItem: renderAutoCompleteMenuItem,
       _renderMenu: renderAutoCompleteMenu
     });
-
-  </script>
-  <script>
+    */
 
 
     var input_data = [
@@ -148,6 +147,10 @@
 
     function autocompleteItemFocusedHandler(event, ui) {
       /* ToDo: Complete this function for handling the item focused event. */
+      /*********************************I'm here */
+      var term = ui.item.value;
+      var highlight = item.value.replace(new RegExp(term, "g"), "<span class = 'selected'>" + term + "</span>"); /* replaces all matching regular expressions with a span of match-character class*/
+      return $("<li></li>").append(highlight).appendTo(ul); /* appends list item to unordered list*/
     };
 
     function autocompleteItemSelectedHandler( event, ui ) {
@@ -161,9 +164,9 @@
 
     function onDocumentReady() {
       /* ToDo: Create the custom autocomplete object according to the definitions above. */
-      $( "#search" ).autocomplete({
+      $( "#search" ).myautocomplete({
         source: input_data,
-        //minLength: 2,
+        minLength: 2,
         select: autocompleteItemSelectedHandler,
 
       });
