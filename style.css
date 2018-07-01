@@ -1,0 +1,49 @@
+body {
+	font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+	font-size: 62.5%;
+}
+.ui-autocomplete-category {
+
+	color: red;
+
+	font-weight: bold;
+
+	padding: .2em .4em;
+
+	margin: .8em 0 .2em;
+
+	line-height: 1.5;
+
+}
+
+.ui-autocomplete {
+
+	max-height: 200px;
+
+	/* ToDo: Add properties such that the custom autocomplete
+
+	option menu has vertical scroll bar but no horizontal scroll bar */
+
+}
+
+.match-character {
+
+	/* ToDo: Add properties such that the characters of each menu item in
+
+	the custom autocomplete widget that matches the search keyword
+
+	will be shown in bold, underline and red. */
+
+	font-style: underline;
+	font-weight: bold;
+	color: red;
+}
+
+li.focused { font-size:16px; }
+
+
+.item-counter{
+	font-size: 16px;
+	font-weight: bold;
+	color: Red;
+}

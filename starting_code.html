@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Autocomplete - Categories</title>
+  <link rel="stylesheet" href="jquery-ui.css">
+  <script src="jquery-1.11.3.js"></script>
+  <script src="jquery-ui.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+  .ui-autocomplete-category {
+    color: red;
+    font-weight: bold;
+    padding: .2em .4em;
+    margin: .8em 0 .2em;
+    line-height: 1.5;
+  }
+
+  .ui-autocomplete {
+    max-height: 200px;
+    /* ToDo: Add properties such that the custom autocomplete
+    option menu has vertical scroll bar but no horizontal scroll bar */
+  }
+
+  .match-character {
+    /* ToDo: Add properties such that the characters of each menu item in
+    the custom autocomplete widget that matches the search keyword
+    will be shown in bold, underline and red. */
+
+    font-style: underline;
+    font-weight: bold;
+    color: red;
+  }
+
+  li.focused { font-size:16px; }
+  .item-category{
+    font-size: 16px;
+    font-weight: bold;
+    color: Red;
+  }
+
+  </style>
+  <script>
+
+  function myAutoCompleteWidgetConstructor() {
+    this._super();
+    this.widget().menu("option", "items", ">:not(.item-counter)");
+  };
+  function renderAutoCompleteMenuItem(ul, item) {
+    terms = this.term.split(',');
+    term = terms[terms.length - 1].trim();
+    // ToDo: Complete this function for defining how to render each menu item that
+    //       will be shown in the custom autocomplete widget
+    /*var re = new RegExp(term, "g"); g is for globally*/
+    var highlight = item.value.replace(new RegExp(term, "g"), "<span class = 'match-character'>" + term + "</span>"); /* replaces all matching regular expressions with a span of match-character class*/
+    return $("<li></li>").append(highlight).appendTo(ul); /* appends list item to unordered list*/
+
+  };
+  function renderAutoCompleteMenu(ul, items) {
+    /* where you add categories */
+
+    var that = this;
+    // ToDo: Complete this function for defining how to render the menu
+    var i = 0;
+    $.each(items, function(index, item) { /*for each function, loops through suggestion items */
+      i++;
+      ul.append("<li class='item-category'>" + i + "</li>");
+      that._renderItemData(ul, item);
+    });
+  };
+  $.widget( "custom.myautocomplete", $.ui.autocomplete, {
+    _create: myAutoCompleteWidgetConstructor,
+    _renderItem: renderAutoCompleteMenuItem,
+    _renderMenu: renderAutoCompleteMenu
+  });
+
+    /**
+    function myAutoCompleteWidgetConstructor() {
+      this._super();
+      this.widget().menu("option", "items", ">:not(.item-category)");
+    };
+    function renderAutoCompleteMenuItem(ul, item) {
+       //ToDo: Complete this function for defining how to render each menu item that
+      will be shown in the custom autocomplete widget
+      terms = this.term.split(',');
+      term = terms[terms.length - 1].trim();
+
+      var highlight = item.value.replace(new RegExp(term, "g"), "<span class = 'match-character'>" + term + "</span>"); /* replaces all matching regular expressions with a span of match-character class
+      return $("<li></li>").append(highlight).appendTo(ul); /* appends list item to unordered list
+    };
+    function renderAutoCompleteMenu(ul, items) {
+      var that = this,
+      /* ToDo: Complete this function for defining how to render the menu with category
+      var i = 0;
+      $.each(items, function(index, item) { /*for each function, loops through suggestion items
+        i++;
+        ul.append("<li class='item-category'>" + i + "</li>");
+        that._renderItemData(ul, item);
+      });
+    };
+    */
+    /* ToDo: Define the custom autocomplete widget according to the above three functions. */
+    $.widget( "custom.myautocomplete", $.ui.autocomplete, {
+      _create: myAutoCompleteWidgetConstructor,
+      _renderItem: renderAutoCompleteMenuItem,
+      _renderMenu: renderAutoCompleteMenu
+    });
+
+  </script>
+  <script>
+
+
+    var input_data = [
+      { label: "anders", category: "General" },
+      { label: "andreas", category: "General" },
+      { label: "antal", category: "General" },
+      { label: "barders", category: "General" },
+      { label: "bardreas", category: "General" },
+      { label: "bartal", category: "General" },
+      { label: "annhhx10", category: "Products" },
+      { label: "annk K12", category: "Products" },
+      { label: "annttop C13", category: "Products" },
+      { label: "barnhhx10", category: "Products" },
+      { label: "barnk K12", category: "Products" },
+      { label: "barnttop C13", category: "Products" },
+      { label: "anders andersson", category: "People" },
+      { label: "andreas andersson", category: "People" },
+      { label: "andreas johnson", category: "People" },
+      { label: "barders antal", category: "People" },
+      { label: "bardreas antal", category: "People" },
+      { label: "bardreas johnson", category: "People" }
+    ];
+
+    function split( val ) {
+      return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+
+    function keydownHandler( event ) {
+      /* ToDo: Complete this function for handling the keydown event. */
+    };
+
+    function autocompleteSourceHandler( request, response ) {
+      /* ToDo: Complete this function for handling the source data of the custom autocomplete widget. */
+    };
+
+    function autocompleteItemFocusedHandler(event, ui) {
+      /* ToDo: Complete this function for handling the item focused event. */
+    };
+
+    function autocompleteItemSelectedHandler( event, ui ) {
+      /* ToDo: Complete this function for handling the item selected event. */
+
+      this.value = '"' + ui.item.value + '", '; /* this is the input text box */
+      return false;
+      /*stops default behavior after searching for something
+      can also write: event.preventDefault(); */
+    };
+
+    function onDocumentReady() {
+      /* ToDo: Create the custom autocomplete object according to the definitions above. */
+      $( "#search" ).autocomplete({
+        source: input_data,
+        //minLength: 2,
+        select: autocompleteItemSelectedHandler,
+
+      });
+    };
+
+    $( document ).ready(onDocumentReady);
+
+  </script>
+</head>
+<body>
+  <div class="ui-widget">
+    <label for="search">Search: </label>
+    <input id="search">
+  </div>
+</body>
+</html>
